@@ -17,14 +17,17 @@ body, html {
 #splash-overlay {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     background: #050505; z-index: 900; transition: opacity 1.5s ease;
+    cursor: pointer;
 }
 #splash-overlay.hidden { opacity: 0; pointer-events: none; }
 
 #start-button {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
     color: #fff; font-family: 'Outfit', sans-serif; font-size: 1.5rem; letter-spacing: 2px;
-    cursor: pointer; opacity: 1; transition: opacity 0.5s ease;
+    opacity: 1; transition: opacity 0.5s ease;
     animation: pulse 2s infinite; z-index: 950; text-transform: uppercase;
+    pointer-events: none;
+    user-select: none;
 }
 @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
 
