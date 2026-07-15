@@ -132,4 +132,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }, observerOptions);
 
     scenes.forEach(scene => sceneObserver.observe(scene));
+    
+    // Auto-pause music when tab is hidden (e.g. minimizing app or locking phone)
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            bgMusic.pause();
+        } else {
+            // Resume only if splash screen was already clicked and user didn't mute it
+            if (overlay.classList.contains("hidden") && !bgMusic.muted) {
+                bgMusic.play().catch(e => console.log("Autoplay blocked:", e));
+            }
+        }
+    });
 });
