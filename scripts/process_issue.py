@@ -51,7 +51,7 @@ def main():
     """
     
     response = client.models.generate_content(
-        model='gemini-1.5-flash',
+        model='gemini-flash-latest',
         contents=translation_prompt,
         config=types.GenerateContentConfig(
             response_mime_type="application/json",
@@ -76,16 +76,16 @@ def main():
             analysis_prompt = f"Analyze this image of a household problem '{title}'. Write a highly detailed prompt for an AI image generator (like Imagen 3) to recreate this exact scene as a 'vibrant watercolor painting'. Add exaggerated visual damage like sparks, smoke, or water leaks depending on the context. Only output the raw prompt string, nothing else."
             
             analysis_response = client.models.generate_content(
-                model='gemini-1.5-flash',
+                model='gemini-flash-latest',
                 contents=[pil_image, analysis_prompt]
             )
             
             imagen_prompt = analysis_response.text.strip()
             print(f"Imagen Prompt: {imagen_prompt}")
             
-            # Шаг B: Рисуем новую акварельную картинку через Imagen 3
+            # Шаг B: Рисуем новую акварельную картинку через Imagen 4
             result = client.models.generate_images(
-                model='imagen-3.0-generate-001',
+                model='imagen-4.0-generate-001',
                 prompt=imagen_prompt,
                 config=types.GenerateImagesConfig(
                     number_of_images=1,
