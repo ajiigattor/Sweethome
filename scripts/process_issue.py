@@ -23,7 +23,8 @@ def main():
     title = issue.get("title") or ""
     
     target_house = "house-1"
-    if "(дом 2)" in title.lower():
+    clean_title_for_check = re.sub(r'[^a-zа-я0-9]', '', title.lower())
+    if "дом2" in clean_title_for_check or "house2" in clean_title_for_check:
         target_house = "house-2"
     
     # Очищаем текст от ссылок
