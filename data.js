@@ -1,5 +1,6 @@
 const translations = {
     'en': {
+        'issue_1784136793': 'My cat pooped in my slippers, turning a peaceful day at home into an unexpected cleaning nightmare.',
         'issue_1784121477': 'I\'m having a problem with ants invading my home; they walk around without asking, eat my food, and don\'t even wipe their feet when they come inside.',
 
 
@@ -22,6 +23,7 @@ const translations = {
         'lang_btn': '🇬🇧 ENG'
     },
     'me': {
+        'issue_1784136793': 'Mačka mi se pokakala u papuče, pretvorivši miran dan kod kuće u neočekivanu noćnu moru od čišćenja.',
         'issue_1784121477': 'Imam problem sa mravima koji bez pitanja šetaju po kući, jedu moju hranu, a ne brišu ni noge kad uđu unutra.',
 
 
@@ -44,6 +46,7 @@ const translations = {
         'lang_btn': '🇲🇪 ME'
     },
     'ua': {
+        'issue_1784136793': 'Кіт наклав у мої капці, перетворивши спокійний день удома на неочікуваний кошмар із прибиранням.',
         'issue_1784121477': 'У мене проблема з мурахами, які без дозволу розгулюють по дому, їдять мою їжу і навіть не витирають ноги, коли заходять всередину.',
 
 
