@@ -22,24 +22,11 @@ def main():
     body = issue.get("body", "")
     title = issue.get("title", "")
     
-    # 2. Поиск картинок (поддержка Markdown, HTML и сырых ссылок GitHub)
-    img_urls = []
-    # Markdown
-    img_urls.extend(re.findall(r'!\[.*?\]\((.*?)\)', body))
-    # HTML
-    img_urls.extend(re.findall(r'<img[^>]+src=["\'](.*?)["\']', body))
-    # Raw GitHub Asset URLs (just in case they are naked)
-    img_urls.extend(re.findall(r'(https://github\.com/[^/\s]+/[^/\s]+/assets/\d+/[a-zA-Z0-9-]+)', body))
-    
-    # Remove duplicates
-    img_urls = list(set(img_urls))
-    
     # Очищаем текст от ссылок
     clean_body = re.sub(r'!\[.*?\]\(.*?\)', '', body)
     clean_body = re.sub(r'<img.*?>', '', clean_body)
     clean_body = re.sub(r'https://github\.com[^\s]+', '', clean_body).strip()
     
-    # Настройка Gemini
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         print("No GEMINI_API_KEY found, exiting.")
@@ -47,7 +34,78 @@ def main():
         
     client = genai.Client(api_key=api_key)
     
-    # 3. Перевод текста на 3 языка
+    # 2. SMART INTENT ROUTER (ADD vs REMOVE)
+    try:
+        with open("data.js", "r") as f:
+            data_js_content = f.read()
+    except Exception as e:
+        data_js_content = "No data.js found"
+        
+    intent_prompt = f"""
+    You are an intelligent router for a website's issue tracker. A user has submitted a GitHub issue.
+    Read the issue title and body to determine if they want to ADD a new problem to the website, or REMOVE an existing problem because it was fixed or deleted.
+    
+    Issue Title: {title}
+    Issue Body: {clean_body}
+    
+    Current problems on the website (from data.js):
+    {data_js_content}
+    
+    If the user is reporting a new problem, return exactly this JSON:
+    {{"action": "ADD"}}
+    
+    If the user is asking to remove, delete, or saying a problem is fixed (e.g. "remove the fridge", "ants are gone"), 
+    figure out WHICH issue ID from the data.js file they mean.
+    Return exactly this JSON:
+    {{"action": "REMOVE", "issue_id": "the_found_id"}}
+    """
+    
+    print("Checking intent (ADD/REMOVE)...")
+    try:
+        intent_response = client.models.generate_content(
+            model='gemini-flash-lite-latest',
+            contents=intent_prompt,
+            config=types.GenerateContentConfig(response_mime_type="application/json")
+        )
+        intent_data = json.loads(intent_response.text)
+        action = intent_data.get("action", "ADD")
+    except Exception as e:
+        print(f"Failed to parse intent: {e}. Defaulting to ADD.")
+        action = "ADD"
+        
+    if action == "REMOVE":
+        issue_id_to_remove = intent_data.get("issue_id")
+        if not issue_id_to_remove:
+            print("Action was REMOVE but no issue_id was provided. Defaulting to ADD.")
+        else:
+            print(f"Intent classified as REMOVE for issue ID: {issue_id_to_remove}")
+            # Remove from index.html
+            with open("index.html", "r") as f:
+                html = f.read()
+            html = re.sub(rf'<!-- Scene:.*?-->\s*<section class="scene[^>]*id="scene-{issue_id_to_remove}".*?</section>', '', html, flags=re.DOTALL)
+            with open("index.html", "w") as f:
+                f.write(html)
+                
+            # Remove from data.js
+            with open("data.js", "r") as f:
+                djs = f.read()
+            djs = re.sub(rf"\s*'{issue_id_to_remove}':\s*'.*?',", "", djs)
+            with open("data.js", "w") as f:
+                f.write(djs)
+                
+            print("Successfully removed the issue from index.html and data.js!")
+            return # Мы завершаем работу, картинки генерировать не нужно
+
+    print("Intent classified as ADD. Proceeding with generation...")
+    
+    # 3. Поиск картинок (поддержка Markdown, HTML и сырых ссылок GitHub)
+    img_urls = []
+    img_urls.extend(re.findall(r'!\[.*?\]\((.*?)\)', body))
+    img_urls.extend(re.findall(r'<img[^>]+src=["\'](.*?)["\']', body))
+    img_urls.extend(re.findall(r'(https://github\.com/[^/\s]+/[^/\s]+/assets/\d+/[a-zA-Z0-9-]+)', body))
+    img_urls = list(set(img_urls))
+    
+    # 4. Перевод текста на 3 языка
     translation_prompt = f"""
     You are a professional translator. Translate the following household problem into English (en), Montenegrin (me), and Ukrainian (ua).
     Combine the Title and Description into a single, natural, story-telling paragraph.
@@ -67,14 +125,11 @@ def main():
     response = client.models.generate_content(
         model='gemini-flash-lite-latest',
         contents=translation_prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-        ),
+        config=types.GenerateContentConfig(response_mime_type="application/json")
     )
-    
     translations = json.loads(response.text)
     
-    # 4. Генерация картинок (Акварель с помощью Imagen)
+    # 5. Генерация картинок (Акварель с помощью Gemini Image)
     downloaded_images = []
     os.makedirs("assets", exist_ok=True)
     
@@ -85,7 +140,7 @@ def main():
             img_data = requests.get(img_url).content
             pil_image = Image.open(BytesIO(img_data))
             
-            analysis_prompt = f"Analyze this image of a household problem '{title}'. Write a highly detailed prompt for an AI image generator (like Imagen 3) to recreate this exact scene as a 'vibrant watercolor painting'. Add exaggerated visual damage like sparks, smoke, or water leaks depending on the context, or emphasize the problem (e.g. huge ants). Only output the raw prompt string, nothing else."
+            analysis_prompt = f"Analyze this image of a household problem '{title}'. Write a highly detailed prompt for an AI image generator to recreate this exact scene as a 'vibrant watercolor painting'. Add exaggerated visual damage like sparks, smoke, or water leaks depending on the context, or emphasize the problem (e.g. huge ants). Only output the raw prompt string, nothing else."
             
             analysis_response = client.models.generate_content(
                 model='gemini-flash-lite-latest',
@@ -95,55 +150,60 @@ def main():
             imagen_prompt = analysis_response.text.strip()
             print(f"Imagen Prompt: {imagen_prompt}")
             
-            # Список моделей для попытки генерации
             image_models_to_try = [
-                'imagen-4.0-generate-001',
-                'imagen-4.0-fast-generate-001',
+                'gemini-2.5-flash-image',
                 'gemini-3.1-flash-image',
-                'gemini-2.5-flash-image'
+                'gemini-3-pro-image'
             ]
             
             result = None
-            for attempt in range(2): # 2 глобальные попытки (с паузой)
+            image_bytes = None
+            
+            for attempt in range(2): 
                 for img_model in image_models_to_try:
                     try:
                         print(f"Trying image model: {img_model} (Attempt {attempt+1})")
-                        result = client.models.generate_images(
+                        result = client.models.generate_content(
                             model=img_model,
-                            prompt=imagen_prompt,
-                            config=types.GenerateImagesConfig(
-                                number_of_images=1,
-                                output_mime_type="image/png",
-                                aspect_ratio="1:1"
-                            )
+                            contents=imagen_prompt,
                         )
-                        break # Успех! Выходим из цикла моделей
+                        has_image = False
+                        if result.candidates and result.candidates[0].content.parts:
+                            for part in result.candidates[0].content.parts:
+                                if part.inline_data and part.inline_data.mime_type.startswith('image/'):
+                                    has_image = True
+                                    image_bytes = part.inline_data.data
+                                    break
+                        if has_image:
+                            break 
+                        else:
+                            result = None
+                            print(f"Failed with {img_model}: No image in response")
                     except Exception as e:
                         print(f"Failed with {img_model}: {e}")
+                        result = None
                         
                 if result:
-                    break # Успех! Выходим из глобального цикла попыток
+                    break
                 else:
-                    print("All models failed in this attempt. Sleeping for 15 seconds before retry...")
+                    print("All models failed. Sleeping for 15s...")
                     time.sleep(15)
                     
-            if not result:
-                raise Exception("All models and retries failed to generate an image.")
+            if not result or not image_bytes:
+                raise Exception("All image generation models failed.")
             
             safe_title = re.sub(r'[^a-zA-Z0-9]', '', title).lower()
             if not safe_title: safe_title = "issue"
             filename = f"{safe_title}_{int(time.time())}_{i}.png"
             filepath = os.path.join("assets", filename)
             
-            generated_image = result.generated_images[0]
             with open(filepath, "wb") as f:
-                f.write(generated_image.image.image_bytes)
+                f.write(image_bytes)
                 
             downloaded_images.append(filepath)
         except Exception as e:
             print(f"Error processing image {i+1} with AI: {e}")
             print("Falling back to original image...")
-            # Save original image instead
             safe_title = re.sub(r'[^a-zA-Z0-9]', '', title).lower()
             if not safe_title: safe_title = "issue"
             filename = f"{safe_title}_{int(time.time())}_{i}_original.png"
@@ -155,14 +215,13 @@ def main():
     if not downloaded_images:
         print("No images processed. Falling back to default.")
         
-    # 5. Обновляем data.js (Словарь переводов)
+    # 6. Обновляем data.js
     issue_id = f"issue_{int(time.time())}"
     with open("data.js", "r") as f:
         data_js = f.read()
         
     for lang in ["en", "me", "ua"]:
         lang_marker = f"'{lang}': {{"
-        # Escape single quotes and newlines for JS string
         safe_text = translations.get(lang, '').replace("'", "\\'").replace("\n", " ")
         replacement = f"'{lang}': {{\n        '{issue_id}': '{safe_text}',"
         data_js = data_js.replace(lang_marker, replacement)
@@ -170,7 +229,7 @@ def main():
     with open("data.js", "w") as f:
         f.write(data_js)
         
-    # 6. Обновляем index.html
+    # 7. Обновляем index.html
     with open("index.html", "r") as f:
         html = f.read()
         
