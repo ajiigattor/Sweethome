@@ -256,6 +256,9 @@ def main():
     insert_target = "<!-- Scene 5: Final Sad Scene -->"
     html = html.replace(insert_target, new_section + "\n        " + insert_target)
     
+    # 8. Cache busting для data.js
+    html = re.sub(r'data\.js\?v=\d+', f'data.js?v={int(time.time())}', html)
+    
     with open("index.html", "w") as f:
         f.write(html)
         
