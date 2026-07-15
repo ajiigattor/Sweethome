@@ -19,8 +19,8 @@ def main():
         event = json.load(f)
         
     issue = event.get("issue", {})
-    body = issue.get("body", "")
-    title = issue.get("title", "")
+    body = issue.get("body") or ""
+    title = issue.get("title") or ""
     
     # Очищаем текст от ссылок
     clean_body = re.sub(r'!\[.*?\]\(.*?\)', '', body)
