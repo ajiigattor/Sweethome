@@ -1,6 +1,5 @@
 const translations = {
     'en': {
-        'issue_1784124361': 'The gate is broken and will not close.',
         'issue_1784122859': 'We don\'t have any curtains, so it gets way too bright during the day and our neighbors keep peeking inside at night.',
         'issue_1784121477': 'I\'m having a problem with ants invading my home; they walk around without asking, eat my food, and don\'t even wipe their feet when they come inside.',
 
@@ -19,7 +18,6 @@ const translations = {
         'lang_btn': '🇬🇧 ENG'
     },
     'me': {
-        'issue_1784124361': 'Kapija je slomljena i ne može da se zatvori.',
         'issue_1784122859': 'Nemamo zavese, pa je tokom dana previše svijetlo, a noću nas komšije posmatraju.',
         'issue_1784121477': 'Imam problem sa mravima koji bez pitanja šetaju po kući, jedu moju hranu, a ne brišu ni noge kad uđu unutra.',
 
@@ -38,7 +36,6 @@ const translations = {
         'lang_btn': '🇲🇪 ME'
     },
     'ua': {
-        'issue_1784124361': 'Ворота зламані і не зачиняються.',
         'issue_1784122859': 'У нас немає штор, тому вдень надто яскраво, а вночі сусіди підглядають за нами.',
         'issue_1784121477': 'У мене проблема з мурахами, які без дозволу розгулюють по дому, їдять мою їжу і навіть не витирають ноги, коли заходять всередину.',
 
