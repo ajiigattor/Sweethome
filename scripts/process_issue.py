@@ -95,15 +95,40 @@ def main():
             imagen_prompt = analysis_response.text.strip()
             print(f"Imagen Prompt: {imagen_prompt}")
             
-            result = client.models.generate_images(
-                model='imagen-4.0-generate-001',
-                prompt=imagen_prompt,
-                config=types.GenerateImagesConfig(
-                    number_of_images=1,
-                    output_mime_type="image/png",
-                    aspect_ratio="1:1"
-                )
-            )
+            # Список моделей для попытки генерации
+            image_models_to_try = [
+                'imagen-4.0-generate-001',
+                'imagen-4.0-fast-generate-001',
+                'gemini-3.1-flash-image',
+                'gemini-2.5-flash-image'
+            ]
+            
+            result = None
+            for attempt in range(2): # 2 глобальные попытки (с паузой)
+                for img_model in image_models_to_try:
+                    try:
+                        print(f"Trying image model: {img_model} (Attempt {attempt+1})")
+                        result = client.models.generate_images(
+                            model=img_model,
+                            prompt=imagen_prompt,
+                            config=types.GenerateImagesConfig(
+                                number_of_images=1,
+                                output_mime_type="image/png",
+                                aspect_ratio="1:1"
+                            )
+                        )
+                        break # Успех! Выходим из цикла моделей
+                    except Exception as e:
+                        print(f"Failed with {img_model}: {e}")
+                        
+                if result:
+                    break # Успех! Выходим из глобального цикла попыток
+                else:
+                    print("All models failed in this attempt. Sleeping for 15 seconds before retry...")
+                    time.sleep(15)
+                    
+            if not result:
+                raise Exception("All models and retries failed to generate an image.")
             
             safe_title = re.sub(r'[^a-zA-Z0-9]', '', title).lower()
             if not safe_title: safe_title = "issue"
