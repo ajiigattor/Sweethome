@@ -15,6 +15,11 @@ const translations = {
         'stove_problem': 'First, the stove. After a power surge, it burned out and doesn\'t work.',
         'fridge_problem': 'Second, the fridge. It doesn\'t work, defrosts, and turns off.',
         'final_text': 'We will be very glad for your help, waiting impatiently.',
+        'house2_intro': 'This is our small family living next door.',
+        'hall2_intro': 'We are very happy here.',
+        'hall2_happy': 'Along with our cute fluffy dog and naughty cat.',
+        'hall2_problems': 'But we also have a few problems and need your help.',
+        'ac_problem': 'I really like working here every day. I even have an air conditioner, but unfortunately no one has hung it up yet. And now I suffer every day.',
         'lang_btn': '🇬🇧 ENG'
     },
     'me': {
@@ -29,10 +34,15 @@ const translations = {
         'house_intro': 'Ovo je naš dom, jako ga volimo.',
         'hall_intro': 'Ovo je naša mala porodica.',
         'hall_happy': 'Srećni smo što živimo ovdje.',
-        'hall_problems': 'Ali imamo nekoliko problema sa kojima nam treba vaša pomoć...',
+        'hall_problems': 'Ali imamo nekoliko problema sa kojima nam je potrebna vaša pomoć...',
         'stove_problem': 'Prvo, šporet. Nakon strujnog udara je pregorio i ne radi.',
         'fridge_problem': 'Drugo, frižider. Ne radi, odmrzava se i sam se gasi.',
-        'final_text': 'Bićemo veoma zahvalni na vašoj pomoći, sa nestrpljenjem očekujemo.',
+        'final_text': 'Bićemo vam veoma zahvalni na pomoći, čekamo sa nestrpljenjem.',
+        'house2_intro': 'Ovo je naša mala porodica koja živi u susedstvu.',
+        'hall2_intro': 'Veoma smo srećni ovde.',
+        'hall2_happy': 'Zajedno sa našim slatkim čupavim psom i nestašnom mačkom.',
+        'hall2_problems': 'Ali i mi imamo nekoliko problema i potrebna nam je vaša pomoć.',
+        'ac_problem': 'Zaista volim da radim ovde svaki dan. Čak imam i klimu, ali nažalost niko je još nije postavio. I sada patim svaki dan.',
         'lang_btn': '🇲🇪 ME'
     },
     'ua': {
@@ -50,7 +60,12 @@ const translations = {
         'hall_problems': 'Але є кілька проблем, з якими нам потрібна ваша допомога...',
         'stove_problem': 'По-перше, плита. Після стрибка напруги вона згоріла і не працює.',
         'fridge_problem': 'По-друге, холодильник. Не працює, розморожується і вимикається.',
-        'final_text': 'Будемо дуже раді вашій допомозі, чекаємо з нетерпінням.',
+        'final_text': 'Ми будемо дуже раді вашій допомозі, чекаємо з нетерпінням.',
+        'house2_intro': 'А це наша невелика сім\'я, яка живе по сусідству.',
+        'hall2_intro': 'Ми дуже щасливі тут.',
+        'hall2_happy': 'Разом із нашим милим пухнастим собакою та кішкою-хуліганкою.',
+        'hall2_problems': 'Але у нас також є кілька проблем, і нам потрібна ваша допомога.',
+        'ac_problem': 'Мені дуже подобається тут працювати кожен день. У мене навіть є кондиціонер, але, на жаль, його ніхто мені досі не повісив. І тепер я страждаю кожен день.',
         'lang_btn': '🇺🇦 UA'
     }
 };

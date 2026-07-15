@@ -54,6 +54,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const bgMusic = document.getElementById("bg-music");
     const muteBtn = document.getElementById("mute-btn");
     const langBtn = document.getElementById("lang-btn");
+    const toggleContainer = document.getElementById("house-toggle-container");
+    const btnHouse1 = document.getElementById("btn-house-1");
+    const btnHouse2 = document.getElementById("btn-house-2");
+    const house1 = document.getElementById("house-1");
+    const house2 = document.getElementById("house-2");
+
+    // Toggle Logic
+    btnHouse1.addEventListener("click", () => {
+        btnHouse1.classList.add("active");
+        btnHouse2.classList.remove("active");
+        house1.classList.remove("hidden-house");
+        house2.classList.add("hidden-house");
+    });
+    btnHouse2.addEventListener("click", () => {
+        btnHouse2.classList.add("active");
+        btnHouse1.classList.remove("active");
+        house2.classList.remove("hidden-house");
+        house1.classList.add("hidden-house");
+    });
 
     // Language switcher
     const langs = ['en', 'me', 'ua'];
@@ -94,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         startBtn.style.display = 'none';
         muteBtn.classList.add("show");
         langBtn.classList.add("show");
+        toggleContainer.classList.add("show");
 
         // Start Splash Sequence
         setTimeout(() => { montenegro.classList.add("splash-center"); }, 100);
@@ -103,35 +123,33 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => { overlay.classList.add("hidden"); }, 3000);
     }, { once: true });
 
-    // Scroll Logic
-    const scrollContainer = document.getElementById("scroll-container");
-    const scenes = document.querySelectorAll('.scene');
-    const observerOptions = { root: scrollContainer, threshold: 0.5 };
+    // Scroll Logic (Dual Observers for both houses)
     let hallTimers = [];
-
-    const sceneObserver = new IntersectionObserver((entries) => {
+    const observerCallback = (entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                
                 // Hall Sequence
-                if (entry.target.id === 'scene-hall' && !entry.target.classList.contains('scene-hall-step-1')) {
-                    // Start Hall Sequence precisely as requested
-                    hallTimers.push(setTimeout(() => { entry.target.classList.add('scene-hall-step-1'); }, 1000)); // "This is our little family."
-                    hallTimers.push(setTimeout(() => { entry.target.classList.add('scene-hall-step-2'); }, 2000)); // People fade in!
-                    hallTimers.push(setTimeout(() => { entry.target.classList.add('scene-hall-step-3'); }, 3000)); // "We are happy to live here..."
+                if ((entry.target.id === 'scene-hall' || entry.target.id === 'scene-hall-2') && !entry.target.classList.contains('scene-hall-step-1')) {
+                    hallTimers.push(setTimeout(() => { entry.target.classList.add('scene-hall-step-1'); }, 1000));
+                    hallTimers.push(setTimeout(() => { entry.target.classList.add('scene-hall-step-2'); }, 2000));
+                    hallTimers.push(setTimeout(() => { entry.target.classList.add('scene-hall-step-3'); }, 3000));
                 }
             } else {
                 entry.target.classList.remove('active');
-                if (entry.target.id === 'scene-hall') {
+                if (entry.target.id === 'scene-hall' || entry.target.id === 'scene-hall-2') {
                     hallTimers.forEach(t => clearTimeout(t));
                     hallTimers = [];
                 }
             }
         });
-    }, observerOptions);
+    };
 
-    scenes.forEach(scene => sceneObserver.observe(scene));
+    const obs1 = new IntersectionObserver(observerCallback, { root: house1, threshold: 0.5 });
+    const obs2 = new IntersectionObserver(observerCallback, { root: house2, threshold: 0.5 });
+
+    house1.querySelectorAll('.scene').forEach(scene => obs1.observe(scene));
+    house2.querySelectorAll('.scene').forEach(scene => obs2.observe(scene));
     
     // Auto-pause music when tab is hidden (e.g. minimizing app or locking phone)
     document.addEventListener("visibilitychange", () => {

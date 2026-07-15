@@ -111,9 +111,9 @@ header {
 .seq-text { opacity: 0; display: inline-block; transition: opacity 1s ease; }
 
 /* The specific fading classes triggered by JS */
-.scene-hall-step-1 #hall-t1 { opacity: 1; }
-.scene-hall-step-2 #hall-people { opacity: 1; }
-.scene-hall-step-3 #hall-t2 { opacity: 1; }
+.scene-hall-step-1 #hall-t1, .scene-hall-step-1 #hall-t1-2 { opacity: 1; }
+.scene-hall-step-2 #hall-people, .scene-hall-step-2 #hall-people-2 { opacity: 1; }
+.scene-hall-step-3 #hall-t2, .scene-hall-step-3 #hall-t2-2 { opacity: 1; }
 
 /* Alignments */
 .left-align { flex-direction: row; }
@@ -233,3 +233,28 @@ header {
 @media (max-width: 768px) {
     .fixed-ribbon { font-size: 1.5rem; padding: 8px 25px; }
 }
+
+/* --- HOUSE TOGGLE --- */
+#house-toggle-container {
+    position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; background: rgba(0,0,0,0.5);
+    padding: 5px; border-radius: 30px; z-index: 1001;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+#house-toggle-container.show { opacity: 1; pointer-events: auto; }
+
+.house-btn {
+    width: 45px; height: 45px; border-radius: 50%; display: flex;
+    justify-content: center; align-items: center; font-size: 1.5rem;
+    cursor: pointer; transition: all 0.3s ease; opacity: 0.5;
+}
+#btn-house-1 { background-color: #3b82f6; } /* Blue */
+#btn-house-2 { background-color: #ef4444; } /* Red */
+
+.house-btn.active { 
+    opacity: 1; 
+    transform: scale(1.1); 
+    box-shadow: 0 0 15px rgba(255,255,255,0.5); 
+}
+
+.hidden-house { display: none !important; }

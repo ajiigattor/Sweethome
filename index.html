@@ -25,13 +25,18 @@
     <div id="mute-btn">🔊</div>
     <div id="lang-btn" data-i18n="lang_btn">🇬🇧 ENG</div>
 
+    <div id="house-toggle-container">
+        <div id="btn-house-1" class="house-btn active">🏠</div>
+        <div id="btn-house-2" class="house-btn">🏠</div>
+    </div>
+
     <!-- Top Header Bar (where they land) -->
     <header id="main-header">
         <div class="header-left"></div>
         <div class="header-right"></div>
     </header>
 
-    <main class="scroll-container" id="scroll-container">
+    <main class="scroll-container active-house" id="house-1">
         
         <!-- Scene 1: The House -->
         <section class="scene scene-gallery" id="scene-house">
@@ -122,6 +127,20 @@
             </div>
         </section>
     
+        
+        <!-- Scene: Сломаны ворота -->
+        <section class="scene scene-problem left-align" id="scene-issue_1784124361">
+            <div class="torn-image-container mask-frame">
+                <div class="ink-reveal carousel-container">
+                    <img src="assets/issue_1784124361_0.png" alt="Сломаны ворота" class="carousel-img active">
+                </div>
+            </div>
+            <div class="text-panel problem-text">
+                <p data-i18n="issue_1784124361">The gate is broken and will not close.</p>
+            </div>
+        </section>
+    
+        <!-- House 1 Target marker for process_issue.py -->
         <!-- Scene 5: Final Sad Scene -->
         <section class="scene scene-problem center-align" id="scene-final">
             <div class="torn-image-container">
@@ -133,7 +152,63 @@
         </section>
 
     </main>
-    <script src="data.js?v=1784126576"></script>
+
+    <!-- House 2 Container -->
+    <main class="scroll-container hidden-house" id="house-2">
+        <section class="scene scene-gallery" id="scene-house-2">
+            <div class="torn-image-container">
+                <img src="assets/house2.png" alt="Neighbor House">
+            </div>
+            <div class="text-panel">
+                <p data-i18n="house2_intro">This is our friends' home. They live right next door.</p>
+            </div>
+        </section>
+
+        <!-- Scene 2: The Hall (Cross-fade Sequence) -->
+        <section class="scene scene-gallery" id="scene-hall-2">
+            <div class="torn-image-container crossfade-frame">
+                <img src="assets/house2.png" class="base-img" alt="Neighbor House Empty">
+                <img src="assets/house2_people.png" class="fade-img" alt="Neighbor House with People" id="hall-people-2">
+            </div>
+            <div class="text-panel">
+                <p>
+                    <span id="hall-t1-2" class="seq-text" data-i18n="hall2_intro">This is their family.</span><br>
+                    <span id="hall-t2-2" class="seq-text" data-i18n="hall2_happy">And their cute fluffy dog.</span><br><br>
+                </p>
+            </div>
+        </section>
+
+        <!-- Transition text -> Scene 3 -->
+        <section class="scene scene-problem center-align" id="scene-transition-2">
+            <div class="text-panel" style="max-width: 800px; text-align: center;">
+                <p style="font-size: 2.5rem; color: #ff6b6b;" data-i18n="hall2_problems">They also have a few problems and need your help.</p>
+            </div>
+        </section>
+
+        <!-- AC Problem Scene -->
+        <section class="scene scene-problem left-align" id="scene-ac-problem">
+            <div class="torn-image-container mask-frame">
+                <div class="ink-reveal carousel-container">
+                    <img src="assets/ac_problem.png" alt="AC Problem" class="carousel-img active">
+                </div>
+            </div>
+            <div class="text-panel problem-text">
+                <p data-i18n="ac_problem">I really like working here every day...</p>
+            </div>
+        </section>
+
+        <!-- House 2 Target marker for process_issue.py -->
+        <!-- Scene 5: Final Sad Scene -->
+        <section class="scene scene-problem center-align" id="scene-final-2">
+            <div class="torn-image-container">
+                <img src="assets/sad_neighbors.png" alt="Sad neighbors">
+            </div>
+            <div class="final-text">
+                <p data-i18n="final_text">We will be very glad for your help, waiting impatiently.</p>
+            </div>
+        </section>
+    </main>
+    <script src=\"data.js?v=1784126576\"></script>
     <script src="app.js?v=5"></script>
 </body>
 </html>

@@ -22,6 +22,10 @@ def main():
     body = issue.get("body") or ""
     title = issue.get("title") or ""
     
+    target_house = "house-1"
+    if "(дом 2)" in title.lower():
+        target_house = "house-2"
+    
     # Очищаем текст от ссылок
     clean_body = re.sub(r'!\[.*?\]\(.*?\)', '', body)
     clean_body = re.sub(r'<img.*?>', '', clean_body)
@@ -290,7 +294,11 @@ def main():
         </section>
     """
     
-    insert_target = "<!-- Scene 5: Final Sad Scene -->"
+    if target_house == "house-2":
+        insert_target = "<!-- House 2 Target marker for process_issue.py -->"
+    else:
+        insert_target = "<!-- House 1 Target marker for process_issue.py -->"
+        
     html = html.replace(insert_target, new_section + "\n        " + insert_target)
     
     # 8. Cache busting для data.js
