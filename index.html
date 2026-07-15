@@ -9,9 +9,9 @@
 </head>
 <body>
 
-    <!-- Splash Screen overlay -->
+    <!-- Splash Screen -->
     <div id="splash-overlay">
-        <div id="start-button">Click anywhere to start</div>
+        <h1 id="start-button" data-i18n="start_text">CLICK ANYWHERE TO START</h1>
     </div>
 
     <!-- Background Audio -->
@@ -20,9 +20,10 @@
     </audio>
 
     <!-- Independent Headers for staggered animation -->
-    <div id="montenegro-tag">Montenegro 🇲🇪</div>
-    <div id="sweet-home-logo">Sweet Home</div>
+    <div id="montenegro-tag" data-i18n="montenegro">Montenegro 🇲🇪</div>
+    <div id="sweet-home-logo" data-i18n="sweet_home">Sweet Home</div>
     <div id="mute-btn">🔊</div>
+    <div id="lang-btn" data-i18n="lang_btn">🇬🇧 ENG</div>
 
     <!-- Top Header Bar (where they land) -->
     <header id="main-header">
@@ -50,8 +51,8 @@
             </div>
             <div class="text-panel">
                 <p>
-                    <span id="hall-t1" class="seq-text">This is our little family.</span><br>
-                    <span id="hall-t2" class="seq-text">We are happy to live here and we love our home.</span><br><br>
+                    <span id="hall-t1" class="seq-text" data-i18n="hall_intro">This is our little family.</span><br>
+                    <span id="hall-t2" class="seq-text" data-i18n="hall_happy">We are happy to live here.</span><br><br>
                 </p>
             </div>
         </section>
@@ -59,7 +60,7 @@
         <!-- Transition text -> Scene 3 -->
         <section class="scene scene-problem center-align" id="scene-transition">
             <div class="text-panel" style="max-width: 800px; text-align: center;">
-                <p style="font-size: 2.5rem; color: #ff6b6b;">But there are some small problems, and here are some of them.</p>
+                <p style="font-size: 2.5rem; color: #ff6b6b;" data-i18n="hall_problems">But there are a few problems we need your help with...</p>
             </div>
         </section>
 
@@ -71,7 +72,7 @@
                 </div>
             </div>
             <div class="text-panel problem-text">
-                <p>First, the stove. After a power surge, it burned out and doesn't work.</p>
+                <p data-i18n="stove_problem">First, the stove. After a power surge, it burned out and doesn't work.</p>
             </div>
         </section>
 
@@ -84,7 +85,7 @@
                 </div>
             </div>
             <div class="text-panel problem-text">
-                <p>Second, the fridge. It doesn't work, defrosts, and turns off.</p>
+                <p data-i18n="fridge_problem">Second, the fridge. It doesn't work, defrosts, and turns off.</p>
             </div>
         </section>
 
@@ -94,11 +95,12 @@
                 <img src="assets/sad_family.png" alt="Sad family">
             </div>
             <div class="final-text">
-                <p>We will be very glad for your help, waiting impatiently.</p>
+                <p data-i18n="final_text">We will be very glad for your help, waiting impatiently.</p>
             </div>
         </section>
 
     </main>
-    <script src="app.js?v=4"></script>
+    <script src="data.js?v=5"></script>
+    <script src="app.js?v=5"></script>
 </body>
 </html>

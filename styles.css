@@ -59,6 +59,15 @@ header {
 }
 #mute-btn.show { opacity: 1; pointer-events: auto; }
 
+#lang-btn {
+    position: fixed; top: 30px; right: 80px; font-size: 1.5rem; cursor: pointer;
+    z-index: 1001; color: white; transition: opacity 0.3s;
+    opacity: 0; pointer-events: none;
+    user-select: none;
+    font-weight: 600;
+}
+#lang-btn.show { opacity: 1; pointer-events: auto; }
+
 .scroll-container {
     height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory;
     scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;
@@ -137,6 +146,11 @@ header {
     #mute-btn { 
         top: auto; bottom: 30px; right: 20px; font-size: 1.8rem; 
         background: rgba(0,0,0,0.5); padding: 10px; border-radius: 50%;
+    }
+    
+    #lang-btn {
+        top: auto; bottom: 30px; left: 20px; right: auto; font-size: 1.5rem;
+        background: rgba(0,0,0,0.5); padding: 10px 15px; border-radius: 20px;
     }
 
     .scene {

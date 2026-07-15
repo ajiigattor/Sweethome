@@ -46,13 +46,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Splash Screen & Audio
+    // Splash Screen & Audio & i18n
     const montenegro = document.getElementById("montenegro-tag");
     const sweetHome = document.getElementById("sweet-home-logo");
     const overlay = document.getElementById("splash-overlay");
     const startBtn = document.getElementById("start-button");
     const bgMusic = document.getElementById("bg-music");
     const muteBtn = document.getElementById("mute-btn");
+    const langBtn = document.getElementById("lang-btn");
+
+    // Language switcher
+    const langs = ['en', 'me', 'ua'];
+    let currentLang = 'en';
+
+    function updateLanguage(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                el.innerText = translations[lang][key];
+            }
+        });
+    }
+
+    langBtn.addEventListener("click", () => {
+        let currentIndex = langs.indexOf(currentLang);
+        currentLang = langs[(currentIndex + 1) % langs.length];
+        updateLanguage(currentLang);
+    });
 
     muteBtn.addEventListener("click", () => {
         if (bgMusic.muted) {
@@ -73,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         startBtn.style.animation = 'none';
         startBtn.style.display = 'none';
         muteBtn.classList.add("show");
+        langBtn.classList.add("show");
 
         // Start Splash Sequence
         setTimeout(() => { montenegro.classList.add("splash-center"); }, 100);
