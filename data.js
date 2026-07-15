@@ -1,5 +1,6 @@
 const translations = {
     'en': {
+        'issue_1784121477': 'I\'m having a problem with ants invading my home; they walk around without asking, eat my food, and don\'t even wipe their feet when they come inside.',
 
 
         'start_text': 'CLICK ANYWHERE TO START',
@@ -15,6 +16,7 @@ const translations = {
         'lang_btn': '🇬🇧 ENG'
     },
     'me': {
+        'issue_1784121477': 'Imam problem sa mravima koji bez pitanja šetaju po kući, jedu moju hranu, a ne brišu ni noge kad uđu unutra.',
 
 
         'start_text': 'KLIKNITE BILO GDJE ZA POČETAK',
@@ -30,6 +32,7 @@ const translations = {
         'lang_btn': '🇲🇪 ME'
     },
     'ua': {
+        'issue_1784121477': 'У мене проблема з мурахами, які без дозволу розгулюють по дому, їдять мою їжу і навіть не витирають ноги, коли заходять всередину.',
 
 
         'start_text': 'НАТИСНІТЬ БУДЬ-ДЕ, ЩОБ ПОЧАТИ',
