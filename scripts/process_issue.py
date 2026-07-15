@@ -24,7 +24,7 @@ def main():
     
     target_house = "house-1"
     clean_title_for_check = re.sub(r'[^a-zа-я0-9]', '', title.lower())
-    if "дом2" in clean_title_for_check or "house2" in clean_title_for_check:
+    if any(alias in clean_title_for_check for alias in ["дом2", "house2", "д2", "h2"]):
         target_house = "house-2"
     
     # Очищаем текст от ссылок
