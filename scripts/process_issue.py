@@ -116,7 +116,16 @@ def main():
                 
             downloaded_images.append(filepath)
         except Exception as e:
-            print(f"Error processing image {i+1}: {e}")
+            print(f"Error processing image {i+1} with AI: {e}")
+            print("Falling back to original image...")
+            # Save original image instead
+            safe_title = re.sub(r'[^a-zA-Z0-9]', '', title).lower()
+            if not safe_title: safe_title = "issue"
+            filename = f"{safe_title}_{int(time.time())}_{i}_original.png"
+            filepath = os.path.join("assets", filename)
+            with open(filepath, "wb") as f:
+                f.write(img_data)
+            downloaded_images.append(filepath)
             
     if not downloaded_images:
         print("No images processed. Falling back to default.")
