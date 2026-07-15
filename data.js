@@ -1,6 +1,5 @@
 const translations = {
     'en': {
-        'issue_1784118877': 'There are a lot of ants in my house; they crawl through the cracks and move around freely, and while they seem friendly enough, they keep stealing my food and never wipe their feet when they come inside.',
 
 
         'start_text': 'CLICK ANYWHERE TO START',
@@ -16,7 +15,6 @@ const translations = {
         'lang_btn': '🇬🇧 ENG'
     },
     'me': {
-        'issue_1784118877': 'U mojoj kući ima mnogo mrava koji ulaze kroz pukotine i slobodno se kreću po prostorijama. Iako djeluju prijateljski nastrojeni, stalno mi kradu hranu i nikada ne obrišu noge kada uđu u moju kuću.',
 
 
         'start_text': 'KLIKNITE BILO GDJE ZA POČETAK',
@@ -32,7 +30,6 @@ const translations = {
         'lang_btn': '🇲🇪 ME'
     },
     'ua': {
-        'issue_1784118877': 'У моєму домі повно мурах, які пролазять крізь шпарини та вільно розгулюють повсюди; вони наче й дружні, але постійно крадуть мою їжу і ніколи не витирають ноги, коли заходять до хати.',
 
 
         'start_text': 'НАТИСНІТЬ БУДЬ-ДЕ, ЩОБ ПОЧАТИ',
