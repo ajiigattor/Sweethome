@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Splash Screen overlay -->
+    <div id="splash-overlay">
+        <div id="start-button">Click anywhere to start</div>
+    </div>
+
+    <!-- Background Audio -->
+    <audio id="bg-music" loop>
+        <source src="assets/music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Independent Headers for staggered animation -->
+    <div id="montenegro-tag">Montenegro 🇲🇪</div>
+    <div id="sweet-home-logo">Sweet Home</div>
+    <div id="mute-btn">🔊</div>
+
+    <!-- Top Header Bar (where they land) -->
+    <header id="main-header">
+        <div class="header-left"></div>
+        <div class="header-right"></div>
+    </header>
+
+    <main class="scroll-container" id="scroll-container">
+        
+        <!-- Scene 1: The House -->
+        <section class="scene scene-gallery" id="scene-house">
+            <div class="torn-image-container">
+                <img src="assets/house.png" alt="House">
+            </div>
+            <div class="text-panel">
+                <p>This is our home, we love it very much.</p>
+            </div>
+        </section>
+
+        <!-- Scene 2: The Hall (Cross-fade Sequence) -->
+        <section class="scene scene-gallery" id="scene-hall">
+            <div class="torn-image-container crossfade-frame">
+                <img src="assets/hall_empty.png" class="base-img" alt="Empty Hall">
+                <img src="assets/hall_we.png" class="fade-img" alt="Hall with us" id="hall-people">
+            </div>
+            <div class="text-panel">
+                <p>
+                    <span id="hall-t1" class="seq-text">This is our little family.</span><br>
+                    <span id="hall-t2" class="seq-text">We are happy to live here and we love our home.</span><br><br>
+                </p>
+            </div>
+        </section>
+
+        <!-- Transition text -> Scene 3 -->
+        <section class="scene scene-problem center-align" id="scene-transition">
+            <div class="text-panel" style="max-width: 800px; text-align: center;">
+                <p style="font-size: 2.5rem; color: #ff6b6b;">But there are some small problems, and here are some of them.</p>
+            </div>
+        </section>
+
+        <!-- Scene 3: Stove (Checkerboard Left) -->
+        <section class="scene scene-problem left-align" id="scene-stove">
+            <div class="torn-image-container mask-frame">
+                <div class="ink-reveal">
+                    <img src="assets/stove.png" alt="Stove">
+                </div>
+            </div>
+            <div class="text-panel problem-text">
+                <p>First, the stove. After a power surge, it burned out and doesn't work.</p>
+            </div>
+        </section>
+
+        <!-- Scene 4: Fridge (Checkerboard Right) -->
+        <section class="scene scene-problem right-align" id="scene-fridge">
+            <div class="torn-image-container mask-frame">
+                <div class="ink-reveal">
+                    <img src="assets/fridge.png" alt="Fridge">
+                </div>
+            </div>
+            <div class="text-panel problem-text">
+                <p>Second, the fridge. It doesn't work, defrosts, and turns off.</p>
+            </div>
+        </section>
+
+        <!-- Scene 5: Final Sad Scene -->
+        <section class="scene scene-problem center-align" id="scene-final">
+            <div class="torn-image-container">
+                <img src="assets/sad_family.png" alt="Sad family">
+            </div>
+            <div class="final-text">
+                <p>We will be very glad for your help, waiting impatiently.</p>
+            </div>
+        </section>
+
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>
