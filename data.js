@@ -1,5 +1,6 @@
 const translations = {
     'en': {
+        'issue_1784118640': 'My house has been invaded by a colony of ants that crawl in through various cracks and roam freely; while they seem friendly enough, they have a habit of stealing my food and never bothering to wipe their feet when they come inside.',
 
         'start_text': 'CLICK ANYWHERE TO START',
         'sweet_home': 'Sweet Home',
@@ -14,6 +15,7 @@ const translations = {
         'lang_btn': '🇬🇧 ENG'
     },
     'me': {
+        'issue_1784118640': 'Moja kuća je puna mrava koji ulaze kroz pukotine i slobodno se kreću po njoj; iako djeluju prijateljski, kradu mi hranu i nikada ne obrišu noge kada uđu u moj dom.',
 
         'start_text': 'KLIKNITE BILO GDJE ZA POČETAK',
         'sweet_home': 'Slatki Dom',
@@ -28,6 +30,7 @@ const translations = {
         'lang_btn': '🇲🇪 ME'
     },
     'ua': {
+        'issue_1784118640': 'У моєму домі повно мурах, які пролазять крізь щілини та вільно пересуваються помешканням; хоч вони й виглядають дружелюбними, вони крадуть мою їжу і ніколи не витирають ноги, коли приходять до мене в гості.',
 
         'start_text': 'НАТИСНІТЬ БУДЬ-ДЕ, ЩОБ ПОЧАТИ',
         'sweet_home': 'Милий Дім',
