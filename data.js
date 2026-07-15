@@ -1,7 +1,7 @@
 const translations = {
     'en': {
         'issue_1784118877': 'There are a lot of ants in my house; they crawl through the cracks and move around freely, and while they seem friendly enough, they keep stealing my food and never wipe their feet when they come inside.',
-        'issue_1784118640': 'My house has been invaded by a colony of ants that crawl in through various cracks and roam freely; while they seem friendly enough, they have a habit of stealing my food and never bothering to wipe their feet when they come inside.',
+
 
         'start_text': 'CLICK ANYWHERE TO START',
         'sweet_home': 'Sweet Home',
@@ -17,7 +17,7 @@ const translations = {
     },
     'me': {
         'issue_1784118877': 'U mojoj kući ima mnogo mrava koji ulaze kroz pukotine i slobodno se kreću po prostorijama. Iako djeluju prijateljski nastrojeni, stalno mi kradu hranu i nikada ne obrišu noge kada uđu u moju kuću.',
-        'issue_1784118640': 'Moja kuća je puna mrava koji ulaze kroz pukotine i slobodno se kreću po njoj; iako djeluju prijateljski, kradu mi hranu i nikada ne obrišu noge kada uđu u moj dom.',
+
 
         'start_text': 'KLIKNITE BILO GDJE ZA POČETAK',
         'sweet_home': 'Slatki Dom',
@@ -33,7 +33,7 @@ const translations = {
     },
     'ua': {
         'issue_1784118877': 'У моєму домі повно мурах, які пролазять крізь шпарини та вільно розгулюють повсюди; вони наче й дружні, але постійно крадуть мою їжу і ніколи не витирають ноги, коли заходять до хати.',
-        'issue_1784118640': 'У моєму домі повно мурах, які пролазять крізь щілини та вільно пересуваються помешканням; хоч вони й виглядають дружелюбними, вони крадуть мою їжу і ніколи не витирають ноги, коли приходять до мене в гості.',
+
 
         'start_text': 'НАТИСНІТЬ БУДЬ-ДЕ, ЩОБ ПОЧАТИ',
         'sweet_home': 'Милий Дім',
