@@ -85,7 +85,7 @@ def main():
             # Remove from index.html
             with open("index.html", "r") as f:
                 html = f.read()
-            html = re.sub(rf'<!-- Scene:.*?-->\s*<section class="scene[^>]*id="scene-{issue_id_to_remove}".*?</section>', '', html, flags=re.DOTALL)
+            html = re.sub(rf'\s*<!-- Scene:[^>]*?-->\s*<section class="scene[^>]*id="scene-{issue_id_to_remove}".*?</section>', '', html, flags=re.DOTALL)
             with open("index.html", "w") as f:
                 f.write(html)
                 
