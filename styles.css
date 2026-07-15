@@ -130,10 +130,14 @@ header {
         top: 20px; left: 1rem; font-size: 1.2rem;
     }
     #montenegro-tag.header-pos {
-        top: 20px; left: calc(100% - 150px); font-size: 1.2rem;
+        top: 20px; left: calc(100% - 160px); font-size: 1.1rem;
     }
     header { padding: 0 1rem; height: 60px; }
-    #mute-btn { top: 20px; right: 1rem; font-size: 1.5rem; }
+    
+    #mute-btn { 
+        top: auto; bottom: 30px; right: 20px; font-size: 1.8rem; 
+        background: rgba(0,0,0,0.5); padding: 10px; border-radius: 50%;
+    }
 
     .scene {
         flex-direction: column !important;
