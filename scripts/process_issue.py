@@ -43,7 +43,7 @@ def main():
         
     intent_prompt = f"""
     You are an intelligent router for a website's issue tracker. A user has submitted a GitHub issue.
-    Read the issue title and body to determine if they want to ADD a new problem to the website, or REMOVE an existing problem because it was fixed or deleted.
+    Read the issue title and body to determine the intent. There are 3 possible actions: ADD, REMOVE, FIX.
     
     Issue Title: {title}
     Issue Body: {clean_body}
@@ -51,13 +51,16 @@ def main():
     Current problems on the website (from data.js):
     {data_js_content}
     
-    If the user is reporting a new problem, return exactly this JSON:
-    {{"action": "ADD"}}
-    
-    If the user is asking to remove, delete, or saying a problem is fixed (e.g. "remove the fridge", "ants are gone"), 
-    figure out WHICH issue ID from the data.js file they mean.
-    Return exactly this JSON:
-    {{"action": "REMOVE", "issue_id": "the_found_id"}}
+    - If the user is reporting a NEW problem, return exactly this JSON:
+      {{"action": "ADD"}}
+      
+    - If the user is saying a problem was RESOLVED, FIXED, or "починили" (and they want to leave a nice "fixed" mark on it), figure out WHICH issue ID they mean from data.js.
+      Return exactly this JSON:
+      {{"action": "FIX", "issue_id": "the_found_id"}}
+      
+    - If the user is explicitly asking to DELETE or REMOVE a problem completely (e.g. "удали", "ошибка", "убери совсем"), figure out WHICH issue ID they mean.
+      Return exactly this JSON:
+      {{"action": "REMOVE", "issue_id": "the_found_id"}}
     """
     
     print("Checking intent (ADD/REMOVE)...")
@@ -93,8 +96,43 @@ def main():
             with open("data.js", "w") as f:
                 f.write(djs)
                 
+            # Cache busting
+            with open("index.html", "r") as f:
+                html = f.read()
+            html = re.sub(r'data\.js\?v=\d+', f'data.js?v={int(time.time())}', html)
+            with open("index.html", "w") as f:
+                f.write(html)
+                
             print("Successfully removed the issue from index.html and data.js!")
             return # Мы завершаем работу, картинки генерировать не нужно
+
+    elif action == "FIX":
+        issue_id_to_fix = intent_data.get("issue_id")
+        if not issue_id_to_fix:
+            print("Action was FIX but no issue_id was provided. Defaulting to ADD.")
+            action = "ADD"
+        else:
+            print(f"Intent classified as FIX for issue ID: {issue_id_to_fix}")
+            with open("index.html", "r") as f:
+                html = f.read()
+                
+            # Добавляем класс resolved
+            section_pattern = rf'(<section class="scene scene-problem[^"]*)" id="scene-{issue_id_to_fix}">'
+            html = re.sub(section_pattern, r'\1 resolved" id="scene-' + issue_id_to_fix + '">', html)
+            
+            # Вставляем HTML ленточки
+            ribbon_html = '\n                <div class="fixed-ribbon-container"><div class="fixed-ribbon" data-i18n="fixed_label">FIXED</div></div>'
+            ribbon_pattern = rf'(id="scene-{issue_id_to_fix}">\s*<div class="torn-image-container mask-frame">)'
+            html = re.sub(ribbon_pattern, r'\1' + ribbon_html, html)
+            
+            # Cache busting
+            html = re.sub(r'data\.js\?v=\d+', f'data.js?v={int(time.time())}', html)
+            
+            with open("index.html", "w") as f:
+                f.write(html)
+            
+            print("Successfully marked the issue as FIXED!")
+            return
 
     print("Intent classified as ADD. Proceeding with generation...")
     

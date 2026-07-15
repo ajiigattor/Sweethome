@@ -3,6 +3,7 @@ const translations = {
         'issue_1784121477': 'I\'m having a problem with ants invading my home; they walk around without asking, eat my food, and don\'t even wipe their feet when they come inside.',
 
 
+        'fixed_label': 'FIXED',
         'start_text': 'CLICK ANYWHERE TO START',
         'sweet_home': 'Sweet Home',
         'montenegro': 'Montenegro 🇲🇪',
@@ -19,6 +20,7 @@ const translations = {
         'issue_1784121477': 'Imam problem sa mravima koji bez pitanja šetaju po kući, jedu moju hranu, a ne brišu ni noge kad uđu unutra.',
 
 
+        'fixed_label': 'RIJEŠENO',
         'start_text': 'KLIKNITE BILO GDJE ZA POČETAK',
         'sweet_home': 'Slatki Dom',
         'montenegro': 'Crna Gora 🇲🇪',
@@ -35,6 +37,7 @@ const translations = {
         'issue_1784121477': 'У мене проблема з мурахами, які без дозволу розгулюють по дому, їдять мою їжу і навіть не витирають ноги, коли заходять всередину.',
 
 
+        'fixed_label': 'ВИПРАВЛЕНО',
         'start_text': 'НАТИСНІТЬ БУДЬ-ДЕ, ЩОБ ПОЧАТИ',
         'sweet_home': 'Милий Дім',
         'montenegro': 'Чорногорія 🇲🇪',
