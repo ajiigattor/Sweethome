@@ -178,7 +178,7 @@ def main():
             img_data = requests.get(img_url).content
             pil_image = Image.open(BytesIO(img_data))
             
-            analysis_prompt = f"Analyze this image of a household problem '{title}'. Write a highly detailed prompt for an AI image generator to recreate this exact scene as a 'vibrant watercolor painting'. Add exaggerated visual damage like sparks, smoke, or water leaks depending on the context, or emphasize the problem (e.g. huge ants). Only output the raw prompt string, nothing else."
+            analysis_prompt = f"Analyze this image of a household problem '{title}'. Write a highly detailed prompt for an AI image generator to recreate this exact scene as a 'vibrant watercolor painting'. Make sure the layout and the main objects closely resemble the original image. Add exaggerated visual damage like sparks, smoke, or cracks depending on the context to emphasize the problem. Only output the raw prompt string, nothing else."
             
             analysis_response = client.models.generate_content(
                 model='gemini-flash-lite-latest',
