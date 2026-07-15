@@ -1,5 +1,6 @@
 const translations = {
     'en': {
+        'issue_1784118213': 'Title: Many ants in the house. Description: They crawl in through cracks and move around freely. They are friendly, but they steal my food and don't wipe their feet when they come into my house.',
         'start_text': 'CLICK ANYWHERE TO START',
         'sweet_home': 'Sweet Home',
         'montenegro': 'Montenegro 🇲🇪',
@@ -13,6 +14,7 @@ const translations = {
         'lang_btn': '🇬🇧 ENG'
     },
     'me': {
+        'issue_1784118213': 'Naslov: Mnogo mrava u kući. Opis: Oni ulaze kroz pukotine i slobodno se kreću. Prijateljski su nastrojeni, ali kradu mi hranu i ne brišu noge kada ulaze u moju kuću.',
         'start_text': 'KLIKNITE BILO GDJE ZA POČETAK',
         'sweet_home': 'Slatki Dom',
         'montenegro': 'Crna Gora 🇲🇪',
@@ -26,6 +28,7 @@ const translations = {
         'lang_btn': '🇲🇪 ME'
     },
     'ua': {
+        'issue_1784118213': 'Назва: Багато мурах у домі. Опис: Вони заповзають через щілини та вільно пересуваються. Вони доброзичливі, але крадуть мою їжу і не витирають ноги, коли приходять у мій дім.',
         'start_text': 'НАТИСНІТЬ БУДЬ-ДЕ, ЩОБ ПОЧАТИ',
         'sweet_home': 'Милий Дім',
         'montenegro': 'Чорногорія 🇲🇪',
