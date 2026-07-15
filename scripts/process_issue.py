@@ -22,11 +22,22 @@ def main():
     body = issue.get("body", "")
     title = issue.get("title", "")
     
-    # 2. Поиск картинок в теле Issue (формат Markdown: ![alt](url))
-    img_urls = re.findall(r'!\[.*?\]\((.*?)\)', body)
+    # 2. Поиск картинок (поддержка Markdown, HTML и сырых ссылок GitHub)
+    img_urls = []
+    # Markdown
+    img_urls.extend(re.findall(r'!\[.*?\]\((.*?)\)', body))
+    # HTML
+    img_urls.extend(re.findall(r'<img[^>]+src=["\'](.*?)["\']', body))
+    # Raw GitHub Asset URLs (just in case they are naked)
+    img_urls.extend(re.findall(r'(https://github\.com/[^/\s]+/[^/\s]+/assets/\d+/[a-zA-Z0-9-]+)', body))
     
-    # Очищаем текст от ссылок на картинки
-    clean_body = re.sub(r'!\[.*?\]\(.*?\)', '', body).strip()
+    # Remove duplicates
+    img_urls = list(set(img_urls))
+    
+    # Очищаем текст от ссылок
+    clean_body = re.sub(r'!\[.*?\]\(.*?\)', '', body)
+    clean_body = re.sub(r'<img.*?>', '', clean_body)
+    clean_body = re.sub(r'https://github\.com[^\s]+', '', clean_body).strip()
     
     # Настройка Gemini
     api_key = os.getenv("GEMINI_API_KEY")
@@ -38,16 +49,19 @@ def main():
     
     # 3. Перевод текста на 3 языка
     translation_prompt = f"""
-    Translate the following household problem description into English (en), Montenegrin (me), and Ukrainian (ua).
-    Output exactly in this JSON format:
-    {{
-        "en": "translated text",
-        "me": "translated text",
-        "ua": "translated text"
-    }}
+    You are a professional translator. Translate the following household problem into English (en), Montenegrin (me), and Ukrainian (ua).
+    Combine the Title and Description into a single, natural, story-telling paragraph.
+    DO NOT include the words "Title:" or "Description:" in your output. Just the natural text.
     
     Title: {title}
     Description: {clean_body}
+    
+    Output exactly in this JSON format:
+    {{
+        "en": "translated natural text",
+        "me": "translated natural text",
+        "ua": "translated natural text"
+    }}
     """
     
     response = client.models.generate_content(
@@ -60,7 +74,7 @@ def main():
     
     translations = json.loads(response.text)
     
-    # 4. Генерация картинок (Акварель с помощью Imagen 3)
+    # 4. Генерация картинок (Акварель с помощью Imagen)
     downloaded_images = []
     os.makedirs("assets", exist_ok=True)
     
@@ -68,12 +82,10 @@ def main():
         try:
             print(f"Processing image {i+1}...")
             
-            # Скачиваем исходную картинку из Issue
             img_data = requests.get(img_url).content
             pil_image = Image.open(BytesIO(img_data))
             
-            # Шаг A: Изучаем исходное фото через Gemini Vision и пишем промпт для художника
-            analysis_prompt = f"Analyze this image of a household problem '{title}'. Write a highly detailed prompt for an AI image generator (like Imagen 3) to recreate this exact scene as a 'vibrant watercolor painting'. Add exaggerated visual damage like sparks, smoke, or water leaks depending on the context. Only output the raw prompt string, nothing else."
+            analysis_prompt = f"Analyze this image of a household problem '{title}'. Write a highly detailed prompt for an AI image generator (like Imagen 3) to recreate this exact scene as a 'vibrant watercolor painting'. Add exaggerated visual damage like sparks, smoke, or water leaks depending on the context, or emphasize the problem (e.g. huge ants). Only output the raw prompt string, nothing else."
             
             analysis_response = client.models.generate_content(
                 model='gemini-flash-lite-latest',
@@ -83,7 +95,6 @@ def main():
             imagen_prompt = analysis_response.text.strip()
             print(f"Imagen Prompt: {imagen_prompt}")
             
-            # Шаг B: Рисуем новую акварельную картинку через Imagen 4
             result = client.models.generate_images(
                 model='imagen-4.0-generate-001',
                 prompt=imagen_prompt,
@@ -94,7 +105,6 @@ def main():
                 )
             )
             
-            # Шаг C: Сохраняем сгенерированную картинку
             safe_title = re.sub(r'[^a-zA-Z0-9]', '', title).lower()
             if not safe_title: safe_title = "issue"
             filename = f"{safe_title}_{int(time.time())}_{i}.png"
@@ -118,7 +128,9 @@ def main():
         
     for lang in ["en", "me", "ua"]:
         lang_marker = f"'{lang}': {{"
-        replacement = f"'{lang}': {{\n        '{issue_id}': '{translations.get(lang, '')}',"
+        # Escape single quotes and newlines for JS string
+        safe_text = translations.get(lang, '').replace("'", "\\'").replace("\n", " ")
+        replacement = f"'{lang}': {{\n        '{issue_id}': '{safe_text}',"
         data_js = data_js.replace(lang_marker, replacement)
         
     with open("data.js", "w") as f:
@@ -143,7 +155,7 @@ def main():
                 </div>
             </div>
             <div class="text-panel problem-text">
-                <p data-i18n="{issue_id}">{translations.get('en', '')}</p>
+                <p data-i18n="{issue_id}">{translations.get('en', '').replace("'", "&apos;")}</p>
             </div>
         </section>
     """
