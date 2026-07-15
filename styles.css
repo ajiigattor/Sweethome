@@ -162,3 +162,23 @@ header {
         margin: 0;
     }
 }
+
+/* Universal Auto-Carousel Logic */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.carousel-img {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+.carousel-img.relative-anchor {
+    position: relative; /* Holds the container height */
+}
+.carousel-img.active {
+    opacity: 1;
+    z-index: 2;
+}

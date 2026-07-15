@@ -27,6 +27,25 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     applyTornEdges();
 
+    // Universal Auto-Carousel Logic
+    const carousels = document.querySelectorAll('.carousel-container');
+    carousels.forEach(container => {
+        const images = container.querySelectorAll('.carousel-img');
+        if (images.length > 0) {
+            // First image must hold the container height
+            images[0].classList.add('relative-anchor');
+            
+            if (images.length > 1) {
+                let currentIndex = 0;
+                setInterval(() => {
+                    images[currentIndex].classList.remove('active');
+                    currentIndex = (currentIndex + 1) % images.length;
+                    images[currentIndex].classList.add('active');
+                }, 3500); // 3.5 seconds crossfade
+            }
+        }
+    });
+
     // Splash Screen & Audio
     const montenegro = document.getElementById("montenegro-tag");
     const sweetHome = document.getElementById("sweet-home-logo");

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sweet Home</title>
-    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="stylesheet" href="styles.css?v=4">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -66,8 +66,8 @@
         <!-- Scene 3: Stove (Checkerboard Left) -->
         <section class="scene scene-problem left-align" id="scene-stove">
             <div class="torn-image-container mask-frame">
-                <div class="ink-reveal">
-                    <img src="assets/stove.png" alt="Stove">
+                <div class="ink-reveal carousel-container">
+                    <img src="assets/stove.png" alt="Stove" class="carousel-img active">
                 </div>
             </div>
             <div class="text-panel problem-text">
@@ -78,8 +78,9 @@
         <!-- Scene 4: Fridge (Checkerboard Right) -->
         <section class="scene scene-problem right-align" id="scene-fridge">
             <div class="torn-image-container mask-frame">
-                <div class="ink-reveal">
-                    <img src="assets/fridge.png" alt="Fridge">
+                <div class="ink-reveal carousel-container">
+                    <img src="assets/fridge.png" alt="Fridge 1" class="carousel-img active">
+                    <img src="assets/fridge2.png" alt="Fridge 2" class="carousel-img">
                 </div>
             </div>
             <div class="text-panel problem-text">
@@ -98,6 +99,6 @@
         </section>
 
     </main>
-    <script src="app.js"></script>
+    <script src="app.js?v=4"></script>
 </body>
 </html>
