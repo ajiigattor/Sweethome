@@ -2,8 +2,11 @@ import os
 import json
 import re
 import requests
-from openai import OpenAI
 import time
+from google import genai
+from google.genai import types
+from io import BytesIO
+from PIL import Image
 
 def main():
     # 1. Загрузка данных из GitHub Issue
@@ -19,24 +22,23 @@ def main():
     body = issue.get("body", "")
     title = issue.get("title", "")
     
-    # 2. Поиск картинок в теле Issue
-    # Markdown image syntax: ![alt](url)
+    # 2. Поиск картинок в теле Issue (формат Markdown: ![alt](url))
     img_urls = re.findall(r'!\[.*?\]\((.*?)\)', body)
     
     # Очищаем текст от ссылок на картинки
     clean_body = re.sub(r'!\[.*?\]\(.*?\)', '', body).strip()
     
-    # Настройка OpenAI
-    api_key = os.getenv("OPENAI_API_KEY")
+    # Настройка Gemini
+    api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
-        print("No OPENAI_API_KEY found, exiting.")
+        print("No GEMINI_API_KEY found, exiting.")
         return
         
-    client = OpenAI(api_key=api_key)
+    client = genai.Client(api_key=api_key)
     
     # 3. Перевод текста на 3 языка
     translation_prompt = f"""
-    Translate the following problem description into English (en), Montenegrin (me), and Ukrainian (ua).
+    Translate the following household problem description into English (en), Montenegrin (me), and Ukrainian (ua).
     Output exactly in this JSON format:
     {{
         "en": "translated text",
@@ -48,59 +50,59 @@ def main():
     Description: {clean_body}
     """
     
-    response = client.chat.completions.create(
-        model="gpt-4o",
-        messages=[{"role": "user", "content": translation_prompt}],
-        response_format={ "type": "json_object" }
+    response = client.models.generate_content(
+        model='gemini-2.5-flash',
+        contents=translation_prompt,
+        config=types.GenerateContentConfig(
+            response_mime_type="application/json",
+        ),
     )
     
-    translations = json.loads(response.choices[0].message.content)
+    translations = json.loads(response.text)
     
-    # 4. Генерация картинок (Акварель)
+    # 4. Генерация картинок (Акварель с помощью Imagen 3)
     downloaded_images = []
+    os.makedirs("assets", exist_ok=True)
     
     for i, img_url in enumerate(img_urls):
         try:
             print(f"Processing image {i+1}...")
-            # Шаг A: Изучаем исходное фото через GPT-4o Vision и пишем промпт для художника
-            analysis_response = client.chat.completions.create(
-                model="gpt-4o",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": [
-                            {"type": "text", "text": f"Analyze this image of a household problem '{title}'. Write a highly detailed prompt for an AI image generator (like DALL-E 3) to recreate this exact scene as a 'vibrant watercolor painting'. Add exaggerated visual damage like sparks, smoke, or water leaks depending on the context. Only output the raw prompt string, nothing else."},
-                            {"type": "image_url", "image_url": {"url": img_url}}
-                        ]
-                    }
-                ]
-            )
-            dalle_prompt = analysis_response.choices[0].message.content.strip()
-            print(f"DALL-E Prompt: {dalle_prompt}")
             
-            # Шаг B: Рисуем новую акварельную картинку
-            image_response = client.images.generate(
-                model="dall-e-3",
-                prompt=dalle_prompt,
-                size="1024x1024",
-                quality="standard",
-                n=1
+            # Скачиваем исходную картинку из Issue
+            img_data = requests.get(img_url).content
+            pil_image = Image.open(BytesIO(img_data))
+            
+            # Шаг A: Изучаем исходное фото через Gemini Vision и пишем промпт для художника
+            analysis_prompt = f"Analyze this image of a household problem '{title}'. Write a highly detailed prompt for an AI image generator (like Imagen 3) to recreate this exact scene as a 'vibrant watercolor painting'. Add exaggerated visual damage like sparks, smoke, or water leaks depending on the context. Only output the raw prompt string, nothing else."
+            
+            analysis_response = client.models.generate_content(
+                model='gemini-2.5-flash',
+                contents=[pil_image, analysis_prompt]
             )
             
-            new_img_url = image_response.data[0].url
+            imagen_prompt = analysis_response.text.strip()
+            print(f"Imagen Prompt: {imagen_prompt}")
             
-            # Шаг C: Скачиваем и сохраняем картинку
-            img_data = requests.get(new_img_url).content
+            # Шаг B: Рисуем новую акварельную картинку через Imagen 3
+            result = client.models.generate_images(
+                model='imagen-3.0-generate-002',
+                prompt=imagen_prompt,
+                config=types.GenerateImagesConfig(
+                    number_of_images=1,
+                    output_mime_type="image/png",
+                    aspect_ratio="1:1"
+                )
+            )
+            
+            # Шаг C: Сохраняем сгенерированную картинку
             safe_title = re.sub(r'[^a-zA-Z0-9]', '', title).lower()
             if not safe_title: safe_title = "issue"
             filename = f"{safe_title}_{int(time.time())}_{i}.png"
             filepath = os.path.join("assets", filename)
             
-            # Убедимся что папка assets существует
-            os.makedirs("assets", exist_ok=True)
-            
+            generated_image = result.generated_images[0]
             with open(filepath, "wb") as f:
-                f.write(img_data)
+                f.write(generated_image.image.image_bytes)
                 
             downloaded_images.append(filepath)
         except Exception as e:
@@ -152,7 +154,7 @@ def main():
     with open("index.html", "w") as f:
         f.write(html)
         
-    print("Issue processed successfully!")
+    print("Issue processed successfully with Gemini API!")
 
 if __name__ == "__main__":
     main()

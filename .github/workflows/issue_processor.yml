@@ -27,7 +27,7 @@ jobs:
 
       - name: Process Issue
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_EVENT_PATH: ${{ github.event_path }}
         run: python scripts/process_issue.py
