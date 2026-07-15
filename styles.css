@@ -235,26 +235,15 @@ header {
 }
 
 /* --- HOUSE TOGGLE --- */
-#house-toggle-container {
+#house-toggle-btn {
     position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 10px; background: rgba(0,0,0,0.5);
-    padding: 5px; border-radius: 30px; z-index: 1001;
-    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    background: rgba(0,0,0,0.5);
+    padding: 8px 20px; border-radius: 30px; z-index: 1001;
+    opacity: 0; pointer-events: none; transition: opacity 1s ease, transform 0.2s;
+    font-size: 1.2rem; cursor: pointer; color: white;
+    user-select: none;
 }
-#house-toggle-container.show { opacity: 1; pointer-events: auto; }
-
-.house-btn {
-    width: 45px; height: 45px; border-radius: 50%; display: flex;
-    justify-content: center; align-items: center; font-size: 1.5rem;
-    cursor: pointer; transition: all 0.3s ease; opacity: 0.5;
-}
-#btn-house-1 { background-color: #3b82f6; } /* Blue */
-#btn-house-2 { background-color: #ef4444; } /* Red */
-
-.house-btn.active { 
-    opacity: 1; 
-    transform: scale(1.1); 
-    box-shadow: 0 0 15px rgba(255,255,255,0.5); 
-}
+#house-toggle-btn.show { opacity: 1; pointer-events: auto; }
+#house-toggle-btn:hover { transform: translateX(-50%) scale(1.1); background: rgba(0,0,0,0.8); }
 
 .hidden-house { display: none !important; }

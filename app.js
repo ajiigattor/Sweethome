@@ -54,24 +54,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const bgMusic = document.getElementById("bg-music");
     const muteBtn = document.getElementById("mute-btn");
     const langBtn = document.getElementById("lang-btn");
-    const toggleContainer = document.getElementById("house-toggle-container");
-    const btnHouse1 = document.getElementById("btn-house-1");
-    const btnHouse2 = document.getElementById("btn-house-2");
+    const houseToggleBtn = document.getElementById("house-toggle-btn");
     const house1 = document.getElementById("house-1");
     const house2 = document.getElementById("house-2");
 
     // Toggle Logic
-    btnHouse1.addEventListener("click", () => {
-        btnHouse1.classList.add("active");
-        btnHouse2.classList.remove("active");
-        house1.classList.remove("hidden-house");
-        house2.classList.add("hidden-house");
-    });
-    btnHouse2.addEventListener("click", () => {
-        btnHouse2.classList.add("active");
-        btnHouse1.classList.remove("active");
-        house2.classList.remove("hidden-house");
-        house1.classList.add("hidden-house");
+    let currentHouse = 1;
+    houseToggleBtn.addEventListener("click", () => {
+        if (currentHouse === 1) {
+            currentHouse = 2;
+            houseToggleBtn.innerText = "🏠 II";
+            house1.classList.add("hidden-house");
+            house1.classList.remove("active-house");
+            house2.classList.remove("hidden-house");
+            house2.classList.add("active-house");
+        } else {
+            currentHouse = 1;
+            houseToggleBtn.innerText = "🏠 I";
+            house2.classList.add("hidden-house");
+            house2.classList.remove("active-house");
+            house1.classList.remove("hidden-house");
+            house1.classList.add("active-house");
+        }
     });
 
     // Language switcher
@@ -113,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         startBtn.style.display = 'none';
         muteBtn.classList.add("show");
         langBtn.classList.add("show");
-        toggleContainer.classList.add("show");
+        if(houseToggleBtn) houseToggleBtn.classList.add("show");
 
         // Start Splash Sequence
         setTimeout(() => { montenegro.classList.add("splash-center"); }, 100);
