@@ -1,5 +1,6 @@
 const translations = {
     'en': {
+        'issue_1784324661': 'Our new refrigerator is already delighting us with fresh food and ice cubes, but the old one is still standing in the middle of the room, blocking the way and needing to be removed.',
         'issue_1784319000': 'A brand new stovetop is sitting wrapped in its packaging, waiting to be installed in place of the broken one, while we sit nearby feeling sad with a frying pan and forks in our hands.',
         'issue_1784295250': 'The storm drain is broken, posing a serious risk as someone could easily trip and injure their leg or paw.',
         'issue_1784121477': 'I\'m having a problem with ants invading my home; they walk around without asking, eat my food, and don\'t even wipe their feet when they come inside.',
@@ -23,6 +24,7 @@ const translations = {
         'lang_btn': '🇬🇧 ENG'
     },
     'me': {
+        'issue_1784324661': 'Naš novi frižider nas već raduje svježim namirnicama i kockicama leda, ali stari frižider i dalje stoji nasred sobe i smeta nam pri prolasku, pa ga treba odnijeti.',
         'issue_1784319000': 'Nova ploča za kuvanje čeka u svom pakovanju da zamijeni pokvarenu, dok mi sjedimo pored nje tužni, držeći tiganj i viljuške.',
         'issue_1784295250': 'Slivnik je polomljen, što predstavlja opasnost jer se neko može lako saplesti i povrijediti nogu ili šapu.',
         'issue_1784121477': 'Imam problem sa mravima koji bez pitanja šetaju po kući, jedu moju hranu, a ne brišu ni noge kad uđu unutra.',
@@ -46,6 +48,7 @@ const translations = {
         'lang_btn': '🇲🇪 ME'
     },
     'ua': {
+        'issue_1784324661': 'Наш новий холодильник вже тішить нас свіжими продуктами та кубиками льоду, але старий досі стоїть посеред кімнати, заважає проходу і його потрібно забрати.',
         'issue_1784319000': 'Нова варильна панель уже лежить загорнута в упаковку і чекає, поки її встановлять замість зламаної, а ми сидимо поруч сумні зі сковорідкою та виделками.',
         'issue_1784295250': 'Зливова каналізація зламалася, і це небезпечно, адже хтось може перечепитися та травмувати ногу або лапку.',
         'issue_1784121477': 'У мене проблема з мурахами, які без дозволу розгулюють по дому, їдять мою їжу і навіть не витирають ноги, коли заходять всередину.',
