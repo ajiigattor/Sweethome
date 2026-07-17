@@ -1,5 +1,6 @@
 const translations = {
     'en': {
+        'issue_1784295250': 'The storm drain is broken, posing a serious risk as someone could easily trip and injure their leg or paw.',
         'issue_1784121477': 'I\'m having a problem with ants invading my home; they walk around without asking, eat my food, and don\'t even wipe their feet when they come inside.',
 
 
@@ -22,6 +23,7 @@ const translations = {
         'lang_btn': '🇬🇧 ENG'
     },
     'me': {
+        'issue_1784295250': 'Slivnik je polomljen, što predstavlja opasnost jer se neko može lako saplesti i povrijediti nogu ili šapu.',
         'issue_1784121477': 'Imam problem sa mravima koji bez pitanja šetaju po kući, jedu moju hranu, a ne brišu ni noge kad uđu unutra.',
 
 
@@ -44,6 +46,7 @@ const translations = {
         'lang_btn': '🇲🇪 ME'
     },
     'ua': {
+        'issue_1784295250': 'Зливова каналізація зламалася, і це небезпечно, адже хтось може перечепитися та травмувати ногу або лапку.',
         'issue_1784121477': 'У мене проблема з мурахами, які без дозволу розгулюють по дому, їдять мою їжу і навіть не витирають ноги, коли заходять всередину.',
 
 
