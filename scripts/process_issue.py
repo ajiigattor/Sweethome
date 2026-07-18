@@ -3,6 +3,7 @@ import json
 import re
 import requests
 import time
+from bs4 import BeautifulSoup, Comment
 from google import genai
 from google.genai import types
 from io import BytesIO
@@ -87,13 +88,27 @@ def main():
             print("Action was REMOVE but no issue_id was provided. Defaulting to ADD.")
         else:
             print(f"Intent classified as REMOVE for issue ID: {issue_id_to_remove}")
-            # Remove from index.html
+            # Remove from index.html using BeautifulSoup
             with open("index.html", "r") as f:
                 html = f.read()
-            section_pattern = rf'(?s)\s*(?:<!--.*?-->)?\s*<section class="scene scene-problem[^"]*" id="scene-{issue_id_to_remove}">.*?</section>'
-            html = re.sub(section_pattern, '', html, flags=re.DOTALL)
+            soup = BeautifulSoup(html, 'html.parser')
+            section = soup.find(id=f"scene-{issue_id_to_remove}")
+            if section:
+                # remove preceding comment if present
+                prev = section.previous_sibling
+                while prev and getattr(prev, 'name', None) is None:
+                    if isinstance(prev, Comment):
+                        prev.extract()
+                        break
+                    if str(prev).strip() == "":
+                        prev_to_remove = prev
+                        prev = prev.previous_sibling
+                        prev_to_remove.extract()
+                    else:
+                        break
+                section.decompose()
             with open("index.html", "w") as f:
-                f.write(html)
+                f.write(str(soup))
                 
             # Remove from data.js
             with open("data.js", "r") as f:
@@ -122,14 +137,23 @@ def main():
             with open("index.html", "r") as f:
                 html = f.read()
                 
-            # Добавляем класс resolved
-            section_pattern = rf'(<section class="scene scene-problem[^"]*)" id="scene-{issue_id_to_fix}">'
-            html = re.sub(section_pattern, r'\1 resolved" id="scene-' + issue_id_to_fix + '">', html)
-            
-            # Вставляем HTML ленточки
-            ribbon_html = '\n                <div class="fixed-ribbon-container"><div class="fixed-ribbon" data-i18n="fixed_label">FIXED</div></div>'
-            ribbon_pattern = rf'(id="scene-{issue_id_to_fix}">\s*<div class="torn-image-container mask-frame">)'
-            html = re.sub(ribbon_pattern, r'\1' + ribbon_html, html)
+            soup = BeautifulSoup(html, 'html.parser')
+            section = soup.find(id=f"scene-{issue_id_to_fix}")
+            if section:
+                classes = section.get('class', [])
+                if 'resolved' not in classes:
+                    classes.append('resolved')
+                    section['class'] = classes
+                    
+                img_container = section.find('div', class_='torn-image-container')
+                if img_container:
+                    ribbon = soup.new_tag('div', attrs={'class': 'fixed-ribbon-container'})
+                    inner_div = soup.new_tag('div', attrs={'class': 'fixed-ribbon', 'data-i18n': 'fixed_label'})
+                    inner_div.string = "FIXED"
+                    ribbon.append(inner_div)
+                    img_container.insert(0, ribbon)
+                    
+            html = str(soup)
             
             # Cache busting
             html = re.sub(r'data\.js\?v=\d+', f'data.js?v={int(time.time())}', html)
@@ -297,11 +321,19 @@ def main():
     """
     
     if target_house == "house-2":
-        insert_target = "<!-- House 2 Target marker for process_issue.py -->"
+        target_marker = "House 2 Target marker"
     else:
-        insert_target = "<!-- House 1 Target marker for process_issue.py -->"
+        target_marker = "House 1 Target marker"
         
-    html = html.replace(insert_target, new_section + "\n        " + insert_target)
+    soup = BeautifulSoup(html, 'html.parser')
+    comments = soup.find_all(string=lambda text: isinstance(text, Comment))
+    for c in comments:
+        if target_marker in c:
+            new_soup = BeautifulSoup(new_section, 'html.parser')
+            c.insert_before(new_soup)
+            break
+            
+    html = str(soup)
     
     # 8. Cache busting для data.js
     html = re.sub(r'data\.js\?v=\d+', f'data.js?v={int(time.time())}', html)
