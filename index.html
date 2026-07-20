@@ -1,238 +1,206 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sweet Home</title>
-    <link rel="stylesheet" href="styles.css?v=4">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Sweet Home</title>
+<link href="styles.css?v=4" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&amp;family=Playfair+Display:ital@1&amp;display=swap" rel="stylesheet"/>
 </head>
 <body>
-
-    <!-- Splash Screen -->
-    <div id="splash-overlay">
-        <h1 id="start-button" data-i18n="start_text">CLICK ANYWHERE TO START</h1>
-    </div>
-
-    <!-- Background Audio -->
-    <audio id="bg-music" loop>
-        <source src="assets/music.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Independent Headers for staggered animation -->
-    <div id="montenegro-tag" data-i18n="montenegro">Montenegro 🇲🇪</div>
-    <div id="sweet-home-logo" data-i18n="sweet_home">Sweet Home</div>
-    <div id="mute-btn">🔊</div>
-    <div id="lang-btn" data-i18n="lang_btn">🇬🇧 ENG</div>
-
-    <div id="house-slider-container">
-        <div class="slider-track" id="house-slider">
-            <div class="slider-thumb"></div>
-            <!-- House 1 Side -->
-            <div class="slider-label slider-label-left">
-                <div class="desktop-content">
-                    <div class="sh-text">Sweet<br>Home</div>
-                    <div class="sh-num">I</div>
-                    <div class="sh-emoji">🏠</div>
-                </div>
-                <div class="mobile-content"><img src="assets/cat_icon.png" width="32" height="32" class="mobile-icon" alt="Cat Icon"></div>
-            </div>
-            <!-- House 2 Side -->
-            <div class="slider-label slider-label-right">
-                <div class="desktop-content">
-                    <div class="sh-text">Sweet<br>Home</div>
-                    <div class="sh-num">II</div>
-                    <div class="sh-emoji">🏡</div>
-                </div>
-                <div class="mobile-content"><img src="assets/dog_icon.png" width="32" height="32" class="mobile-icon" alt="Dog Icon"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Top Header Bar (where they land) -->
-    <header id="main-header">
-        <div class="header-left"></div>
-        <div class="header-right"></div>
-    </header>
-
-    <main class="scroll-container active-house" id="house-1">
-        
-        <!-- Scene 1: The House -->
-        <section class="scene scene-gallery" id="scene-house">
-            <div class="torn-image-container">
-                <img src="assets/house.png" alt="House">
-            </div>
-            <div class="text-panel">
-                <p data-i18n="house_intro">This is our home, we love it very much.</p>
-            </div>
-        </section>
-
-        <!-- Scene 2: The Hall (Cross-fade Sequence) -->
-        <section class="scene scene-gallery" id="scene-hall">
-            <div class="torn-image-container crossfade-frame">
-                <img src="assets/hall_empty.png" class="base-img" alt="Empty Hall">
-                <img src="assets/hall_we.png" class="fade-img" alt="Hall with us" id="hall-people">
-            </div>
-            <div class="text-panel">
-                <p>
-                    <span id="hall-t1" class="seq-text" data-i18n="hall_intro">This is our little family.</span><br>
-                    <span id="hall-t2" class="seq-text" data-i18n="hall_happy">We are happy to live here.</span><br><br>
-                </p>
-            </div>
-        </section>
-
-        <!-- Transition text -> Scene 3 -->
-        <section class="scene scene-problem center-align" id="scene-transition">
-            <div class="text-panel" style="max-width: 800px; text-align: center;">
-                <p style="font-size: 2.5rem; color: #ff6b6b;" data-i18n="hall_problems">But there are a few problems we need your help with...</p>
-            </div>
-        </section>
-
-        <!-- Scene 4: Fridge (Checkerboard Right) -->
-        <section class="scene scene-problem right-align resolved" id="scene-fridge_problem">
-            <div class="torn-image-container mask-frame">
-                <div class="fixed-ribbon-container"><div class="fixed-ribbon" data-i18n="fixed_label">FIXED</div></div>
-                <div class="ink-reveal carousel-container">
-                    <img src="assets/fridge.png" alt="Fridge 1" class="carousel-img active">
-                    <img src="assets/fridge2.png" alt="Fridge 2" class="carousel-img">
-                </div>
-            </div>
-            <div class="text-panel problem-text">
-                <p data-i18n="fridge_problem">Second, the fridge. It doesn't work, defrosts, and turns off.</p>
-            </div>
-        </section>
-
-
-
-    
-        
-        
-    
-        
-        <!-- Scene: Проблема с муровьями -->
-        <section class="scene scene-problem left-align resolved" id="scene-issue_1784121477">
-            <div class="torn-image-container mask-frame">
-                <div class="fixed-ribbon-container"><div class="fixed-ribbon" data-i18n="fixed_label">FIXED</div></div>
-                <div class="ink-reveal carousel-container">
-                    <img src="assets/issue_1784121456_0.png" alt="Проблема с муровьями" class="carousel-img active">
-                    <img src="assets/issue_1784121477_1.png" alt="Проблема с муровьями" class="carousel-img ">
-                </div>
-            </div>
-            <div class="text-panel problem-text">
-                <p data-i18n="issue_1784121477">I&apos;m having a problem with ants invading my home; they walk around without asking, eat my food, and don&apos;t even wipe their feet when they come inside.</p>
-            </div>
-        </section>
-    
-
-
-        
-        <!-- Scene: Сломалась ливневка -->
-        <section class="scene scene-problem left-align" id="scene-issue_1784295250">
-            <div class="torn-image-container mask-frame">
-                <div class="ink-reveal carousel-container">
-                    <img src="assets/issue_1784295250_0.png" alt="Сломалась ливневка" class="carousel-img active">
-                </div>
-            </div>
-            <div class="text-panel problem-text">
-                <p data-i18n="issue_1784295250">The storm drain is broken, posing a serious risk as someone could easily trip and injure their leg or paw.</p>
-            </div>
-        </section>
-    
-        
-        <!-- Scene: Новая рабочая варочная панель ждёт замены -->
-        <section class="scene scene-problem left-align" id="scene-issue_1784319000">
-            <div class="torn-image-container mask-frame">
-                <div class="ink-reveal carousel-container">
-                    <img src="assets/issue_1784319000_0.png" alt="Новая рабочая варочная панель ждёт замены" class="carousel-img active">
-                </div>
-            </div>
-            <div class="text-panel problem-text">
-                <p data-i18n="issue_1784319000">A brand new stovetop is sitting wrapped in its packaging, waiting to be installed in place of the broken one, while we sit nearby feeling sad with a frying pan and forks in our hands.</p>
-            </div>
-        </section>
-    
-        
-        <!-- Scene: Забрать старый холодильник -->
-        <section class="scene scene-problem left-align" id="scene-issue_1784324661">
-            <div class="torn-image-container mask-frame">
-                <div class="ink-reveal carousel-container">
-                    <img src="assets/issue_1784324661_0.png" alt="Забрать старый холодильник" class="carousel-img active">
-                </div>
-            </div>
-            <div class="text-panel problem-text">
-                <p data-i18n="issue_1784324661">Our new refrigerator is already delighting us with fresh food and ice cubes, but the old one is still standing in the middle of the room, blocking the way and needing to be removed.</p>
-            </div>
-        </section>
-    
-        <!-- House 1 Target marker for process_issue.py -->
-        <!-- Scene 5: Final Sad Scene -->
-        <section class="scene scene-problem center-align" id="scene-final">
-            <div class="torn-image-container">
-                <img src="assets/sad_family.png" alt="Sad family">
-            </div>
-            <div class="final-text">
-                <p data-i18n="final_text">We will be very glad for your help, waiting impatiently.</p>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- House 2 Container -->
-    <main class="scroll-container hidden-house" id="house-2">
-        <section class="scene scene-gallery" id="scene-house-2">
-            <div class="torn-image-container">
-                <img src="assets/house2.png" alt="Neighbor House">
-            </div>
-            <div class="text-panel">
-                <p data-i18n="house2_intro">This is our friends' home. They live right next door.</p>
-            </div>
-        </section>
-
-        <!-- Scene 2: The Hall (Cross-fade Sequence) -->
-        <section class="scene scene-gallery" id="scene-hall-2">
-            <div class="torn-image-container crossfade-frame">
-                <img src="assets/house2.png" class="base-img" alt="Neighbor House Empty">
-                <img src="assets/house2_people.png" class="fade-img" alt="Neighbor House with People" id="hall-people-2">
-            </div>
-            <div class="text-panel">
-                <p>
-                    <span id="hall-t1-2" class="seq-text" data-i18n="hall2_intro">This is their family.</span><br>
-                    <span id="hall-t2-2" class="seq-text" data-i18n="hall2_happy">And their cute fluffy dog.</span><br><br>
-                </p>
-            </div>
-        </section>
-
-        <!-- Transition text -> Scene 3 -->
-        <section class="scene scene-problem center-align" id="scene-transition-2">
-            <div class="text-panel" style="max-width: 800px; text-align: center;">
-                <p style="font-size: 2.5rem; color: #ff6b6b;" data-i18n="hall2_problems">They also have a few problems and need your help.</p>
-            </div>
-        </section>
-
-        <!-- AC Problem Scene -->
-        <section class="scene scene-problem left-align" id="scene-ac_problem">
-            <div class="torn-image-container mask-frame">
-                <div class="ink-reveal carousel-container">
-                    <img src="assets/ac_problem.png" alt="AC Problem" class="carousel-img active">
-                </div>
-            </div>
-            <div class="text-panel problem-text">
-                <p data-i18n="ac_problem">I really like working here every day...</p>
-            </div>
-        </section>
-
-        <!-- House 2 Target marker for process_issue.py -->
-        <!-- Scene 5: Final Sad Scene -->
-        <section class="scene scene-problem center-align" id="scene-final-2">
-            <div class="torn-image-container">
-                <img src="assets/sad_neighbors.png" alt="Sad neighbors">
-            </div>
-            <div class="final-text">
-                <p data-i18n="final_text">We will be very glad for your help, waiting impatiently.</p>
-            </div>
-        </section>
-    </main>
-    <script src="data.js?v=1784324661"></script>
-    <script src="app.js?v=5"></script>
+<!-- Splash Screen -->
+<div id="splash-overlay">
+<h1 data-i18n="start_text" id="start-button">CLICK ANYWHERE TO START</h1>
+</div>
+<!-- Background Audio -->
+<audio id="bg-music" loop="">
+<source src="assets/music.mp3" type="audio/mpeg"/>
+</audio>
+<!-- Independent Headers for staggered animation -->
+<div data-i18n="montenegro" id="montenegro-tag">Montenegro 🇲🇪</div>
+<div data-i18n="sweet_home" id="sweet-home-logo">Sweet Home</div>
+<div id="mute-btn">🔊</div>
+<div data-i18n="lang_btn" id="lang-btn">🇬🇧 ENG</div>
+<div id="house-slider-container">
+<div class="slider-track" id="house-slider">
+<div class="slider-thumb"></div>
+<!-- House 1 Side -->
+<div class="slider-label slider-label-left">
+<div class="desktop-content">
+<div class="sh-text">Sweet<br/>Home</div>
+<div class="sh-num">I</div>
+<div class="sh-emoji">🏠</div>
+</div>
+<div class="mobile-content"><img alt="Cat Icon" class="mobile-icon" height="32" src="assets/cat_icon.png" width="32"/></div>
+</div>
+<!-- House 2 Side -->
+<div class="slider-label slider-label-right">
+<div class="desktop-content">
+<div class="sh-text">Sweet<br/>Home</div>
+<div class="sh-num">II</div>
+<div class="sh-emoji">🏡</div>
+</div>
+<div class="mobile-content"><img alt="Dog Icon" class="mobile-icon" height="32" src="assets/dog_icon.png" width="32"/></div>
+</div>
+</div>
+</div>
+<!-- Top Header Bar (where they land) -->
+<header id="main-header">
+<div class="header-left"></div>
+<div class="header-right"></div>
+</header>
+<main class="scroll-container active-house" id="house-1">
+<!-- Scene 1: The House -->
+<section class="scene scene-gallery" id="scene-house">
+<div class="torn-image-container">
+<img alt="House" src="assets/house.png"/>
+</div>
+<div class="text-panel">
+<p data-i18n="house_intro">This is our home, we love it very much.</p>
+</div>
+</section>
+<!-- Scene 2: The Hall (Cross-fade Sequence) -->
+<section class="scene scene-gallery" id="scene-hall">
+<div class="torn-image-container crossfade-frame">
+<img alt="Empty Hall" class="base-img" src="assets/hall_empty.png"/>
+<img alt="Hall with us" class="fade-img" id="hall-people" src="assets/hall_we.png"/>
+</div>
+<div class="text-panel">
+<p>
+<span class="seq-text" data-i18n="hall_intro" id="hall-t1">This is our little family.</span><br/>
+<span class="seq-text" data-i18n="hall_happy" id="hall-t2">We are happy to live here.</span><br/><br/>
+</p>
+</div>
+</section>
+<!-- Transition text -> Scene 3 -->
+<section class="scene scene-problem center-align" id="scene-transition">
+<div class="text-panel" style="max-width: 800px; text-align: center;">
+<p data-i18n="hall_problems" style="font-size: 2.5rem; color: #ff6b6b;">But there are a few problems we need your help with...</p>
+</div>
+</section>
+<!-- Scene 4: Fridge (Checkerboard Right) -->
+<section class="scene scene-problem right-align resolved" id="scene-fridge_problem">
+<div class="torn-image-container mask-frame">
+<div class="fixed-ribbon-container"><div class="fixed-ribbon" data-i18n="fixed_label">FIXED</div></div>
+<div class="ink-reveal carousel-container">
+<img alt="Fridge 1" class="carousel-img active" src="assets/fridge.png"/>
+<img alt="Fridge 2" class="carousel-img" src="assets/fridge2.png"/>
+</div>
+</div>
+<div class="text-panel problem-text">
+<p data-i18n="fridge_problem">Second, the fridge. It doesn't work, defrosts, and turns off.</p>
+</div>
+</section>
+<!-- Scene: Проблема с муровьями -->
+<section class="scene scene-problem left-align resolved" id="scene-issue_1784121477">
+<div class="torn-image-container mask-frame">
+<div class="fixed-ribbon-container"><div class="fixed-ribbon" data-i18n="fixed_label">FIXED</div></div>
+<div class="ink-reveal carousel-container">
+<img alt="Проблема с муровьями" class="carousel-img active" src="assets/issue_1784121456_0.png"/>
+<img alt="Проблема с муровьями" class="carousel-img" src="assets/issue_1784121477_1.png"/>
+</div>
+</div>
+<div class="text-panel problem-text">
+<p data-i18n="issue_1784121477">I'm having a problem with ants invading my home; they walk around without asking, eat my food, and don't even wipe their feet when they come inside.</p>
+</div>
+</section>
+<!-- Scene: Сломалась ливневка -->
+<section class="scene scene-problem left-align" id="scene-issue_1784295250">
+<div class="torn-image-container mask-frame">
+<div class="ink-reveal carousel-container">
+<img alt="Сломалась ливневка" class="carousel-img active" src="assets/issue_1784295250_0.png"/>
+</div>
+</div>
+<div class="text-panel problem-text">
+<p data-i18n="issue_1784295250">The storm drain is broken, posing a serious risk as someone could easily trip and injure their leg or paw.</p>
+</div>
+</section>
+<!-- Scene: Новая рабочая варочная панель ждёт замены -->
+<section class="scene scene-problem left-align" id="scene-issue_1784319000">
+<div class="torn-image-container mask-frame">
+<div class="ink-reveal carousel-container">
+<img alt="Новая рабочая варочная панель ждёт замены" class="carousel-img active" src="assets/issue_1784319000_0.png"/>
+</div>
+</div>
+<div class="text-panel problem-text">
+<p data-i18n="issue_1784319000">A brand new stovetop is sitting wrapped in its packaging, waiting to be installed in place of the broken one, while we sit nearby feeling sad with a frying pan and forks in our hands.</p>
+</div>
+</section>
+<!-- Scene: Забрать старый холодильник -->
+<section class="scene scene-problem left-align resolved" id="scene-issue_1784324661">
+<div class="torn-image-container mask-frame"><div class="fixed-ribbon-container"><div class="fixed-ribbon" data-i18n="fixed_label">FIXED</div></div>
+<div class="ink-reveal carousel-container">
+<img alt="Забрать старый холодильник" class="carousel-img active" src="assets/issue_1784324661_0.png"/>
+</div>
+</div>
+<div class="text-panel problem-text">
+<p data-i18n="issue_1784324661">Our new refrigerator is already delighting us with fresh food and ice cubes, but the old one is still standing in the middle of the room, blocking the way and needing to be removed.</p>
+</div>
+</section>
+<!-- House 1 Target marker for process_issue.py -->
+<!-- Scene 5: Final Sad Scene -->
+<section class="scene scene-problem center-align" id="scene-final">
+<div class="torn-image-container">
+<img alt="Sad family" src="assets/sad_family.png"/>
+</div>
+<div class="final-text">
+<p data-i18n="final_text">We will be very glad for your help, waiting impatiently.</p>
+</div>
+</section>
+</main>
+<!-- House 2 Container -->
+<main class="scroll-container hidden-house" id="house-2">
+<section class="scene scene-gallery" id="scene-house-2">
+<div class="torn-image-container">
+<img alt="Neighbor House" src="assets/house2.png"/>
+</div>
+<div class="text-panel">
+<p data-i18n="house2_intro">This is our friends' home. They live right next door.</p>
+</div>
+</section>
+<!-- Scene 2: The Hall (Cross-fade Sequence) -->
+<section class="scene scene-gallery" id="scene-hall-2">
+<div class="torn-image-container crossfade-frame">
+<img alt="Neighbor House Empty" class="base-img" src="assets/house2.png"/>
+<img alt="Neighbor House with People" class="fade-img" id="hall-people-2" src="assets/house2_people.png"/>
+</div>
+<div class="text-panel">
+<p>
+<span class="seq-text" data-i18n="hall2_intro" id="hall-t1-2">This is their family.</span><br/>
+<span class="seq-text" data-i18n="hall2_happy" id="hall-t2-2">And their cute fluffy dog.</span><br/><br/>
+</p>
+</div>
+</section>
+<!-- Transition text -> Scene 3 -->
+<section class="scene scene-problem center-align" id="scene-transition-2">
+<div class="text-panel" style="max-width: 800px; text-align: center;">
+<p data-i18n="hall2_problems" style="font-size: 2.5rem; color: #ff6b6b;">They also have a few problems and need your help.</p>
+</div>
+</section>
+<!-- AC Problem Scene -->
+<section class="scene scene-problem left-align" id="scene-ac_problem">
+<div class="torn-image-container mask-frame">
+<div class="ink-reveal carousel-container">
+<img alt="AC Problem" class="carousel-img active" src="assets/ac_problem.png"/>
+</div>
+</div>
+<div class="text-panel problem-text">
+<p data-i18n="ac_problem">I really like working here every day...</p>
+</div>
+</section>
+<!-- House 2 Target marker for process_issue.py -->
+<!-- Scene 5: Final Sad Scene -->
+<section class="scene scene-problem center-align" id="scene-final-2">
+<div class="torn-image-container">
+<img alt="Sad neighbors" src="assets/sad_neighbors.png"/>
+</div>
+<div class="final-text">
+<p data-i18n="final_text">We will be very glad for your help, waiting impatiently.</p>
+</div>
+</section>
+</main>
+<script src="data.js?v=1784575540"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
